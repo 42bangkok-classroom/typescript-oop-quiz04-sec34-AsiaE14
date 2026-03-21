@@ -1,10 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { json } from 'stream/consumers';
 import * as fs from 'fs';
-import * as path from 'path';
-import { stringify } from 'querystring';
-
-
+//import dayjs from 'dayjs';
 
 @Injectable()
 export class MissionService {
@@ -45,7 +42,6 @@ export class MissionService {
   }
 
   findAll() {
-   // const filepath = path.join('./data/missions.json');
     try{
       const data = JSON.parse(fs.readFileSync('./data/missions.json','utf8'));
       const result = data.map((time)=>{
@@ -53,8 +49,9 @@ export class MissionService {
         if(time.endDate === null){
           time.durationDays= -1;
         }else{
+          //time.durationDays = dayjs(time.endDate).diff(dayjs(time.startDate),'day');
            const Dstart:Date = new Date(time.startDate);
-           const Dend:Date = new Date(time.endDate);
+          const Dend:Date = new Date(time.endDate);
           time.durationDays = (Dend.getTime() - Dstart.getTime())/(1000*60*60*24);
         }return time;
       });

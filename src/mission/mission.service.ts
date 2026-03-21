@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateMissionDto } from './dto/create-mission.dto';
-//import { UpdateMissionDto } from './dto/update-mission.dto';
+
 
 
 
@@ -27,17 +27,29 @@ export class MissionService {
     return 'This action adds a new mission';
   }
 
-  getSummary() {
+ /* getSummary() {
 
-    var count = 0;
-    this.missions.reduce((acc, mission) => acc.concat(), []).filter(status => status === 'ACTIVE').length;
-  
-   // let json = JSON.stringify(ob);
-  
+    const summary = { };
+   for(let a of this.missions){
+    if ( summary[a.status]  ===undefined){
+      summary[a.status] =1 
+    }
+    else{summary[a.status] =summary[a.status] + 1} 
+
+   
+  } return summary;
+  }*/
+ getSummary()
+ { return this.missions.reduce((summary,a) =>{
+  if(summary[a.status]===undefined){
+    summary[a.status]=1;
+  }else{ summary[a.status]= summary[a.status]+1}
 
 
-     return count;
-  }
+  return summary;
+
+ },{}); 
+}
 
   findAll() {
     return `This action returns all mission`;
@@ -53,9 +65,7 @@ export class MissionService {
   { id: 6, codename: 'GHOST_RIDER', status: 'COMPLETED' }
 ];}
 
- /* update(id: number, updateMissionDto: UpdateMissionDto) {
-    return `This action updates a #${id} mission`;
-  }*/
+ 
 
   remove(id: number) {
     return `This action removes a #${id} mission`;

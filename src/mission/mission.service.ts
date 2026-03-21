@@ -41,10 +41,10 @@ export class MissionService {
     );
   }
 
-  findAll() :IMission[]   {
+  findAll() : IMission[]   {
     try {
-      const data = JSON.parse(fs.readFileSync('./data/missions.json', 'utf8')) ;
-      const result = data.map((time) => {
+      const data = JSON.parse(fs.readFileSync('./data/missions.json', 'utf8')) as IMission[] ;
+      const result: IMission[] = data.map((time) => {
         if (time.endDate === null) {
           time.durationDays = -1;
         } else {

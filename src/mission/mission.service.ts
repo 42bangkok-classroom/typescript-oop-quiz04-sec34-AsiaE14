@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { json } from 'stream/consumers';
 import * as fs from 'fs';
 //import dayjs from 'dayjs';
+import { IMission } from './mission.interface';
 
 @Injectable()
 export class MissionService {
@@ -41,24 +41,26 @@ export class MissionService {
     );
   }
 
-  findAll() {
-    try{
-      const data = JSON.parse(fs.readFileSync('./data/missions.json','utf8'));
-      const result = data.map((time)=>{
-
-        if(time.endDate === null){
-          time.durationDays= -1;
-        }else{
+  findAll() :IMission[]   {
+    try {
+      const data = JSON.parse(fs.readFileSync('./data/missions.json', 'utf8')) ;
+      const result = data.map((time) => {
+        if (time.endDate === null) {
+          time.durationDays = -1;
+        } else {
           //time.durationDays = dayjs(time.endDate).diff(dayjs(time.startDate),'day');
-           const Dstart:Date = new Date(time.startDate);
-          const Dend:Date = new Date(time.endDate);
-          time.durationDays = (Dend.getTime() - Dstart.getTime())/(1000*60*60*24);
-        }return time;
+          const Dstart: Date = new Date(time.startDate);
+          const Dend: Date = new Date(time.endDate);
+          time.durationDays =
+            (Dend.getTime() - Dstart.getTime()) / (1000 * 60 * 60 * 24);
+        }
+        return time;
       });
 
-    return result;
-    }catch(error){
+      return result;
+    } catch (error) {
       console.error(error);
+      return []
     }
   }
 

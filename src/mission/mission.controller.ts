@@ -10,9 +10,8 @@ export class MissionController {
   getSummary(): object {
     return this.missionService.getSummary();
   }
-  @Get('findAll')
-  async missions():Promise<IMission[]> {
-    return this.missionService.findAll();
+  @Get()
+  async missions(): Promise<IMission[]> {
+    return await this.missionService.findAll();
   }
-  
 }

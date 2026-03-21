@@ -1,6 +1,5 @@
-
 export class CreateMissionDto {
-    id: number;
-    codename: string;
-    status: 'ACTIVE' | 'COMPLETED' | 'FAILED';      
+  id: number;
+  codename: string;
+  status: 'ACTIVE' | 'COMPLETED' | 'FAILED';
 }

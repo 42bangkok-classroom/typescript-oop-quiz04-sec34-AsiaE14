@@ -1,4 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import { json } from 'stream/consumers';
+import * as fs from 'fs';
+import * as path from 'path';
+import { stringify } from 'querystring';
+
+
 
 @Injectable()
 export class MissionService {
@@ -39,7 +45,24 @@ export class MissionService {
   }
 
   findAll() {
-    return `This action returns all mission`;
+   // const filepath = path.join('./data/missions.json');
+    try{
+      const data = JSON.parse(fs.readFileSync('./data/missions.json','utf8'));
+      const result = data.map((time)=>{
+
+        if(time.endDate === null){
+          time.durationDays= -1;
+        }else{
+           const Dstart:Date = new Date(time.startDate);
+           const Dend:Date = new Date(time.endDate);
+          time.durationDays = (Dend.getTime() - Dstart.getTime())/(1000*60*60*24);
+        }return time;
+      });
+
+    return result;
+    }catch(error){
+      console.error(error);
+    }
   }
 
   remove(id: number) {

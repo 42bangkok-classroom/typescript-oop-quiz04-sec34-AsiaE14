@@ -4,14 +4,14 @@ import { MissionService } from './mission.service';
 
 @Controller('missions/summary')
 export class MissionController {
-    constructor(private readonly missionService:  MissionService) {}
+  constructor(private readonly missionService: MissionService) { }
 
-    @Get()
-    getSum(): Object {
+  @Get()
+  getSum(): object {
     return this.missionService.getSummary();
   }
 
-    
 
-    
+
+
 }

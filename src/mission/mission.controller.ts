@@ -15,13 +15,12 @@ export class MissionController {
     return this.missionService.findAll();
   }
   @Get('status/:status')
-  Status(@Param('status') param:string){
+  Status(@Param('status') param: string) {
     return this.missionService.Status(param);
   }
- 
+
   @Get(':id')
-  findOne(@Param('id') param:string){
+  findOne(@Param('id') param: string) {
     return this.missionService.findOne(param);
   }
-  
 }

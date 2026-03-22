@@ -41,7 +41,7 @@ export class MissionService {
     );
   }
 
-  findAll(){
+  findAll() {
     try {
       const data = JSON.parse(
         fs.readFileSync('./data/missions.json', 'utf8'),
@@ -66,27 +66,30 @@ export class MissionService {
     }
   }
 
-  Status(param){
-    try{
-      const dataJSON = JSON.parse(fs.readFileSync('./data/missions.json','utf-8'),) as IMission[]
-      const acttive = dataJSON.filter((m)=> m.status === param.toUpperCase());
-    return acttive;
-
-    }catch(error){
-      console.log(error);
-      return ["a"];
+  Status(param:string) {
+    try {
+      const dataJSON = JSON.parse(
+        fs.readFileSync('./data/missions.json', 'utf-8'),
+      ) as IMission[];
+      const acttive = dataJSON.filter((m) => m.status === param.toUpperCase());
+      return acttive;
+    } catch (error: unknown) {
+      console.error(error);
+      return [];
     }
-    
   }
-  findOne(param:string){
-    try{
-    const dataJSON = JSON.parse(fs.readFileSync('./data/missions.json','utf-8'),) as IMission[]
-   
-    return dataJSON.find((f) => f.id === param); ;
-  }catch(error){
-    console.log(error);
-    return[];
-  }}
+  findOne(param: string) {
+    try {
+      const dataJSON = JSON.parse(
+        fs.readFileSync('./data/missions.json', 'utf-8'),
+      ) as IMission[];
+
+      return dataJSON.find((f) => f.id === param);
+    } catch (error: unknown) {
+      console.error(error);
+      return [];
+    }
+  }
 
   remove(id: number) {
     return `This action removes a #${id} mission`;

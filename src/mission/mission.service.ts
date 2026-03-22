@@ -61,12 +61,14 @@ export class MissionService {
 
       return result;
     } catch (error) {
-      console.error(error);
+      if (error instanceof Error) {
+        console.error(error.message);
+      }
       return [];
     }
   }
 
-  Status(param:string) {
+  Status(param: string) {
     try {
       const dataJSON = JSON.parse(
         fs.readFileSync('./data/missions.json', 'utf-8'),
@@ -74,7 +76,9 @@ export class MissionService {
       const acttive = dataJSON.filter((m) => m.status === param.toUpperCase());
       return acttive;
     } catch (error: unknown) {
-      console.error(error);
+      if (error instanceof Error) {
+        console.error(error.message);
+      }
       return [];
     }
   }
@@ -86,7 +90,9 @@ export class MissionService {
 
       return dataJSON.find((f) => f.id === param);
     } catch (error: unknown) {
-      console.error(error);
+      if (error instanceof Error) {
+        console.error(error.message);
+      }
       return [];
     }
   }

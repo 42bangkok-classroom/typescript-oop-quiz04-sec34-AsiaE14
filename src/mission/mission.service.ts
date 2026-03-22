@@ -41,7 +41,7 @@ export class MissionService {
     );
   }
 
-  findAll(): IMission[] {
+  findAll(){
     try {
       const data = JSON.parse(
         fs.readFileSync('./data/missions.json', 'utf8'),
@@ -65,6 +65,28 @@ export class MissionService {
       return [];
     }
   }
+
+  Status(param){
+    try{
+      const dataJSON = JSON.parse(fs.readFileSync('./data/missions.json','utf-8'),) as IMission[]
+      const acttive = dataJSON.filter((m)=> m.status === param.toUpperCase());
+    return acttive;
+
+    }catch(error){
+      console.log(error);
+      return ["a"];
+    }
+    
+  }
+  findOne(param:string){
+    try{
+    const dataJSON = JSON.parse(fs.readFileSync('./data/missions.json','utf-8'),) as IMission[]
+   
+    return dataJSON.find((f) => f.id === param); ;
+  }catch(error){
+    console.log(error);
+    return[];
+  }}
 
   remove(id: number) {
     return `This action removes a #${id} mission`;

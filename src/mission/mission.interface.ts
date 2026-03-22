@@ -1,5 +1,5 @@
 export interface IMission {
-  id: number;
+  id: string;
   codename: string;
   status: 'ACTIVE' | 'COMPLETED' | 'FAILED';
   targetName: string;

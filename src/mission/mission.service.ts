@@ -6,7 +6,6 @@ import {
 import * as fs from 'fs';
 //import dayjs from 'dayjs';
 import { IMission } from './mission.interface';
-import { clear } from 'console';
 
 @Injectable()
 export class MissionService {

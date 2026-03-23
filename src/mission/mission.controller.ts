@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Query, Post } from '@nestjs/common';
 import { MissionService } from './mission.service';
 import { IMission } from './mission.interface';
 
@@ -22,5 +22,9 @@ export class MissionController {
   @Get(':id')
   findOne(@Param('id') id: string, @Query('clearance') clearance: string) {
     return this.missionService.findOne(id, clearance);
+  }
+  @Post()
+  create(@Body() body: Partial<IMission>) {
+    return this.missionService.create(body);
   }
 }

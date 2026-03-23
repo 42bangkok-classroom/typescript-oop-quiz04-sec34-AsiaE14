@@ -94,7 +94,7 @@ export class MissionService {
       ) as IMission[];
     } catch (error: unknown) {
       if (error instanceof Error) {
-        console.error(error.message);
+        console.error(error);
       }
       throw new InternalServerErrorException();
     }
@@ -115,5 +115,35 @@ export class MissionService {
 
   remove(id: number) {
     return `This action removes a #${id} mission`;
+  }
+
+  create(body: Partial<IMission>) {
+    let dataJSON: IMission[];
+    try {
+      dataJSON = JSON.parse(
+        fs.readFileSync('./data/missions.json', 'utf-8'),
+      ) as IMission[];
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error(error);
+      }
+      throw new InternalServerErrorException();
+    }
+    const newID = String(Number(dataJSON[dataJSON.length - 1].id) + 1);
+
+    const newMIS = {
+      id: newID,
+      codename: body.codename,
+      status: 'ACTIVE',
+      targetName: body.targetName,
+      riskLevel: body.riskLevel,
+      startDate: body.startDate,
+      endDate: null,
+    } as IMission;
+
+    dataJSON.push(newMIS);
+    const addData = JSON.stringify(dataJSON, null, 2);
+    fs.writeFileSync('./data/missions.json', addData, 'utf-8');
+    return newMIS;
   }
 }

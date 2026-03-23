@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import * as fs from 'fs';
 //import dayjs from 'dayjs';
 import { IMission } from './mission.interface';
@@ -83,30 +87,29 @@ export class MissionService {
       return [];
     }
   }
-  findOne(id: string,clearance:string = 'STANDARD') {
-    let dataJSON: IMission[]
+  findOne(id: string, clearance: string = 'STANDARD') {
+    let dataJSON: IMission[];
     try {
-       dataJSON = JSON.parse(
-        fs.readFileSync('./data/missions.json', 'utf-8'),
-      );
-       
-
+      dataJSON = JSON.parse(fs.readFileSync('./data/missions.json', 'utf-8'));
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error(error.message);
-      }  throw  new InternalServerErrorException();
-      
+      }
+      throw new InternalServerErrorException();
     }
 
-     const target = dataJSON.find((f) => f.id === id);
-     if(!target){
+    const target = dataJSON.find((f) => f.id === id);
+    if (!target) {
       throw new NotFoundException();
     }
 
-      if((clearance.toUpperCase() !=="TOP_SECRET")&&(target.riskLevel === "HIGH"||target.riskLevel ==="CRITICAL")){
-        target.targetName = "***REDACTED***"; 
-      } return target;
-    
+    if (
+      clearance.toUpperCase() !== 'TOP_SECRET' &&
+      (target.riskLevel === 'HIGH' || target.riskLevel === 'CRITICAL')
+    ) {
+      target.targetName = '***REDACTED***';
+    }
+    return target;
   }
 
   remove(id: number) {

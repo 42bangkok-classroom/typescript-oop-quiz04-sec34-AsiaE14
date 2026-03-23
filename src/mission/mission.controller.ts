@@ -1,6 +1,7 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { MissionService } from './mission.service';
 import { IMission } from './mission.interface';
+import { clear } from 'console';
 
 @Controller('missions')
 export class MissionController {
@@ -20,7 +21,10 @@ export class MissionController {
   }
 
   @Get(':id')
-  findOne(@Param('id') param: string) {
-    return this.missionService.findOne(param);
+  findOne(
+    @Param('id') id: string,
+    @Query('clearance') clearance:string
+  ) {
+    return this.missionService.findOne(id,clearance);
   }
 }

@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import * as fs from 'fs';
 //import dayjs from 'dayjs';
 import { IMission } from './mission.interface';
+import { clear } from 'console';
 
 @Injectable()
 export class MissionService {
@@ -82,13 +83,19 @@ export class MissionService {
       return [];
     }
   }
-  findOne(param: string) {
+  findOne(id: string,clearance:string) {
     try {
       const dataJSON = JSON.parse(
         fs.readFileSync('./data/missions.json', 'utf-8'),
       ) as IMission[];
+     const target = dataJSON.find((f) => f.id === id);
+     if(!target){
+      throw new NotFoundException('404');
+    }
 
-      return dataJSON.find((f) => f.id === param);
+      if((clearance.toUpperCase() !=="TOP_SECRET")&&(target.riskLevel === "HIGH"||target.riskLevel ==="CRITICAL")){
+        target.targetName = "***REDACTED***"; 
+      } return target;
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error(error.message);

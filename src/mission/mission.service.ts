@@ -133,11 +133,8 @@ export class MissionService {
 
     const newMIS = {
       id: newID,
-      codename: body.codename,
+      ...body,
       status: 'ACTIVE',
-      targetName: body.targetName,
-      riskLevel: body.riskLevel,
-      startDate: body.startDate,
       endDate: null,
     } as IMission;
 

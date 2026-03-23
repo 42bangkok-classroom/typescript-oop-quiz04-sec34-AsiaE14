@@ -89,7 +89,9 @@ export class MissionService {
   findOne(id: string, clearance: string = 'STANDARD') {
     let dataJSON: IMission[];
     try {
-      dataJSON = JSON.parse(fs.readFileSync('./data/missions.json', 'utf-8'));
+      dataJSON = JSON.parse(
+        fs.readFileSync('./data/missions.json', 'utf-8'),
+      ) as IMission[];
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error(error.message);

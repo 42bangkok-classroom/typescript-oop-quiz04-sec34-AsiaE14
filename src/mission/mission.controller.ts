@@ -12,10 +12,10 @@ import { MissionService } from './mission.service';
 export class MissionController {
   constructor(private readonly missionService: MissionService) {}
 
-  @Post()
+  /*@Post()
   create(@Body() CreateMissionDto: string) {
     return this.missionService.create();
-  }
+  }*/
 
   @Get('summary')
   getSummary() {

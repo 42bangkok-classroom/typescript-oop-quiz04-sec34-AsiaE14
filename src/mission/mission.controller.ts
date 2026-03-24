@@ -1,14 +1,22 @@
-import { Controller, Get, Param, Delete, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Body,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { MissionService } from './mission.service';
 
 @Controller('missions')
 export class MissionController {
   constructor(private readonly missionService: MissionService) {}
 
-  /*@Post()
-  create(@Body() CreateMissionDto: string) {
-    return this.missionService.create();
-  }*/
+  @Post()
+  create(@Body() body: any) {
+    return this.missionService.create(body);
+  }
 
   @Get('summary')
   getSummary() {

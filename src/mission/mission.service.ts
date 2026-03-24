@@ -7,8 +7,30 @@ import { IMission } from './mission.interface';
 import * as fs from 'fs';
 @Injectable()
 export class MissionService {
-  create() {
-    return 'This action adds a new mission';
+  create(body: any) {
+    let dataJSON: IMission[];
+    try {
+      dataJSON = JSON.parse(
+        fs.readFileSync('./data/missions.json', 'utf-8'),
+      ) as IMission[];
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error);
+      }
+      throw new InternalServerErrorException();
+    }
+
+    const count = String(Number(dataJSON[dataJSON.length - 1].id) + 1);
+    const news = {
+      id: count,
+      ...body,
+      status: 'ACTIVE',
+      endDate: null,
+    } as IMission;
+    dataJSON.push(news);
+    const addD = JSON.stringify(dataJSON, null, 2);
+    fs.writeFileSync('./data/missions.json', addD, 'utf8');
+    return news;
   }
   private readonly missions = [
     { id: 1, codename: 'OPERATION_STORM', status: 'ACTIVE' },

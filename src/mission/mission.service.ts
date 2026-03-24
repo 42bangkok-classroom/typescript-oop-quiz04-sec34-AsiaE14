@@ -113,8 +113,29 @@ export class MissionService {
     return target;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} mission`;
+  remove(id: string) {
+    let dataJSON: IMission[];
+    try {
+      dataJSON = JSON.parse(
+        fs.readFileSync('./data/missions.json', 'utf-8'),
+      ) as IMission[];
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error);
+      }
+      throw new InternalServerErrorException();
+    }
+    const che = dataJSON.find((m) => m.id === id);
+    if (!che) {
+      throw new NotFoundException();
+    }
+
+    const Rid = dataJSON.filter((m) => m.id !== id);
+
+    const reData = JSON.stringify(Rid, null, 2);
+    fs.writeFileSync('./data/missions.json', reData, 'utf-8');
+
+    return { message: `Mission ID ${id} has been successfully deleted.` };
   }
 
   create(body: Partial<IMission>) {

@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
-
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { IMission } from './mission.interface';
+import * as fs from 'fs';
 @Injectable()
 export class MissionService {
   create() {
@@ -26,6 +27,31 @@ export class MissionService {
       },
       {} as Record<string, number>,
     );
+  }
+  geta() {
+    let dataJSON:IMission[];
+    try {
+      dataJSON = JSON.parse(
+        fs.readFileSync('./data/missions.json', 'utf-8'),
+      ) as IMission[];
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error);
+      }
+      throw new InternalServerErrorException();
+    }
+    const result = dataJSON.map((a) => {
+      if (a.endDate === null) {
+        a.durationDays = -1;
+      } else {
+        const date =
+          (new Date(a.endDate).getTime() - new Date(a.startDate).getTime()) /
+          (1000 * 60 * 60 * 24);
+        a.durationDays = date;
+      }
+      return a;
+    });
+    return result;
   }
 
   findOne(id: number) {

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Param, Delete } from '@nestjs/common';
 import { MissionService } from './mission.service';
 
 @Controller('missions')
@@ -13,6 +13,10 @@ export class MissionController {
   @Get('summary')
   getSummary() {
     return this.missionService.getSummary();
+  }
+  @Get()
+  geta() {
+    return this.missionService.geta();
   }
 
   @Get(':id')

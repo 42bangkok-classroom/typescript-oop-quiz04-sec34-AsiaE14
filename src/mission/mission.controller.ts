@@ -15,7 +15,7 @@ export class MissionController {
     return this.missionService.getSummary();
   }
   @Get()
-  geta() {
+  findAll() {
     return this.missionService.geta();
   }
 

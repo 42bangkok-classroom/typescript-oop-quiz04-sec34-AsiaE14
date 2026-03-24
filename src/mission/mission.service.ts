@@ -29,7 +29,7 @@ export class MissionService {
     );
   }
   geta() {
-    let dataJSON:IMission[];
+    let dataJSON: IMission[];
     try {
       dataJSON = JSON.parse(
         fs.readFileSync('./data/missions.json', 'utf-8'),

@@ -54,7 +54,7 @@ export class MissionService {
       {} as Record<string, number>,
     );
   }
-  geta() {
+  findAll() {
     let dataJSON: IMission[];
     try {
       dataJSON = JSON.parse(

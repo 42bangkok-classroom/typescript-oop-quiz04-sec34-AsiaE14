@@ -24,7 +24,7 @@ export class MissionController {
   }
   @Get()
   findAll() {
-    return this.missionService.geta();
+    return this.missionService.findAll();
   }
 
   @Get(':id')
